@@ -1,5 +1,5 @@
-export type DeputadosResponseModel = {
-  dados: DeputadoModel[];
+export type ResponseModel<T> = {
+  dados: T;
   links: {
     rel: string;
     href: string;
@@ -16,4 +16,23 @@ export type DeputadoModel = {
   idLegislatura: number;
   urlFoto: string;
   email: string;
+}
+
+export type PartidoModel = {
+  id: number;
+  nome: string;
+  numeroEleitoral: number;
+  sigla: string;
+  status: {
+    data: string;
+    idLegislatura: number;
+    situacao: string;
+    totalMembros: string;
+    totalPosse: string;
+    uriMembros: string;
+  };
+  uri: string;
+  urlFacebook: string;
+  urlLogo: string;
+  urlWebSite: string;
 }

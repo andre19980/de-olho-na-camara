@@ -6,18 +6,16 @@ export const typeDefs = gql`
     deputados: [Deputado!]!
   }
    
-  "A Deputado represents a congressperson in the federal congress"
+  "Deputado represents a congressperson in the federal congress"
   type Deputado {
     "Identifier number of a congressperson"
-    id: Int!
+    id: ID!
     "REST endpoint of congressperson's data"
     uri: String!
     "Name of the congressperson"
     nome: String!
     "Party of the congressperson"
-    siglaPartido: String!
-    "REST endpoint of party's data"
-    uriPartido: String
+    partido: Partido!
     "Federal State of the congressperson"
     siglaUf: String!
     "Identifier number of the congressperson's mandate"
@@ -26,5 +24,27 @@ export const typeDefs = gql`
     urlFoto: String
     "e-mail of the congressperson"
     email: String
+  }
+
+  "Partido represents the party of a congressperson"
+  type Partido {
+    id: ID!
+    nome: String!
+    numeroEleitoral: Int
+    sigla: String!
+    status: PartidoStatus!
+    uri: String!
+    urlFacebook: String
+    urlLogo: String
+    urlWebSite: String
+  }
+
+  type PartidoStatus {
+    data: String
+    idLegislatura: ID!
+    situacao: String
+    totalMembros: Int
+    totalPosse: Int
+    uriMembros: String
   }
 `;

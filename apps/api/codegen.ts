@@ -9,6 +9,7 @@ const config: CodegenConfig = {
         contextType: './context#DataSourceContext',
         mappers: {
           Deputado: './models#DeputadoModel',
+          Partido: './models#PartidoModel',
         }
       },
     },

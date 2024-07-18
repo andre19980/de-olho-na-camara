@@ -6,4 +6,12 @@ export const resolvers: Resolvers = {
       return dataSources.camaraDeputadosAPI.getDeputados();
     },
   },
+  Deputado: {
+    partido: ({ uriPartido }, _, { dataSources }) => {
+      const match = uriPartido.match(/\/partidos\/(\d+)/);
+      const partidoId = parseInt(match?.[1] ?? "");
+
+      return dataSources.camaraDeputadosAPI.getPartido(partidoId);
+    },
+  }
 };
