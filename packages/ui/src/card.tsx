@@ -1,3 +1,5 @@
+import { Card as CardMui } from "@mui/material";
+
 export function Card({
   className,
   title,
@@ -10,16 +12,18 @@ export function Card({
   href: string;
 }): JSX.Element {
   return (
-    <a
-      className={className}
-      href={`${href}?utm_source=create-turbo&utm_medium=basic&utm_campaign=create-turbo"`}
-      rel="noopener noreferrer"
-      target="_blank"
-    >
-      <h2>
-        {title} <span>-&gt;</span>
-      </h2>
-      <p>{children}</p>
-    </a>
+    <CardMui>
+      <a
+        className={className}
+        href={`${href}?utm_source=create-turbo&utm_medium=basic&utm_campaign=create-turbo"`}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <h2>
+          {title} <span>-&gt;</span>
+        </h2>
+        <p>{children}</p>
+      </a>
+    </CardMui>
   );
 }
