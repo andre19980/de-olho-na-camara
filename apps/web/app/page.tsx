@@ -2,32 +2,33 @@
 
 import classes from "./page.module.css";
 import { Unstable_Grid2 as Grid } from "@repo/ui";
-import Table from "@repo/ui/table";
-import Autocomplete from "@repo/ui/autocomplete";
 import Image from "next/image";
+import { Suspense } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
+import Autocomplete from "@/app/components/autocomplete";
+import Table from "@/app/components/table";
 
-import { useSuspenseQuery } from "@apollo/client";
-import { gql } from "@/app/__generated__";
-
-import classesTable from './table.module.css'
-
-const GET_DEPUTADOS = gql(`
-  query Deputados {
-    deputados {
-      id
-      nome
-      siglaUf
-      email
-      partido {
-        sigla
-      }
-    }
+interface PageProps {
+  searchParams?: {
+    nome?: string;
+    pagina?: string;
   }
-`);
+}
 
-export default function Page(): JSX.Element {
-  const { data } = useSuspenseQuery(GET_DEPUTADOS);
-  const autocompleteOptions = data.deputados.map(deputado => deputado.nome);
+export default function Page({ searchParams }: PageProps): JSX.Element {
+  const { pagina } = searchParams ?? {};
+  const { replace } = useRouter();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (!pagina) {
+      const params = new URLSearchParams(searchParams);
+      params.set('pagina', '1');
+
+      replace(`${pathname}?${params.toString()}`);
+    }
+  }, []);
 
   return (
     <main className={classes.main}>
@@ -47,10 +48,20 @@ export default function Page(): JSX.Element {
           />
         </Grid>
         <Grid display="flex" justifyContent="center" xs={12}>
-          <Autocomplete options={autocompleteOptions}/>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Autocomplete />
+          </Suspense>
         </Grid>
-        <Grid xs={12}>
-          <Table data={data.deputados} />
+        <Grid
+          xs={12}
+          display="flex"
+          flexDirection="column"
+          rowGap={2}
+          justifyContent="center"  
+        >
+          <Suspense fallback={<div>Loading...</div>}>
+            <Table />
+          </Suspense>
         </Grid>
       </Grid>
     </main>

@@ -25,6 +25,9 @@ function makeClient() {
             httpLink,
           ])
         : httpLink,
+    devtools: {
+      enabled: true,
+    },
   });
 }
 
