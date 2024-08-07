@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 export const typeDefs = gql`
   type Query {
     "GET deputatados"
-    deputados: [Deputado!]!
+    deputados(pagina: String, itens: String, query: String): [Deputado!]!
   }
    
   "Deputado represents a congressperson in the federal congress"

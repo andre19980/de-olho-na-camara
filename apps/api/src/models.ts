@@ -3,7 +3,7 @@ export type ResponseModel<T> = {
   links: {
     rel: string;
     href: string;
-  };
+  }[];
 }
 
 export type DeputadoModel = {

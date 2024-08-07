@@ -69,6 +69,13 @@ export type Query = {
 };
 
 
+export type QueryDeputadosArgs = {
+  itens?: InputMaybe<Scalars['String']['input']>;
+  pagina?: InputMaybe<Scalars['String']['input']>;
+  query?: InputMaybe<Scalars['String']['input']>;
+};
+
+
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
 
@@ -197,7 +204,7 @@ export type PartidoStatusResolvers<ContextType = DataSourceContext, ParentType e
 };
 
 export type QueryResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  deputados?: Resolver<Array<ResolversTypes['Deputado']>, ParentType, ContextType>;
+  deputados?: Resolver<Array<ResolversTypes['Deputado']>, ParentType, ContextType, Partial<QueryDeputadosArgs>>;
 };
 
 export type Resolvers<ContextType = DataSourceContext> = {

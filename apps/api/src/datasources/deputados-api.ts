@@ -4,8 +4,15 @@ import { ResponseModel, DeputadoModel, PartidoModel } from "../models";
 export class CamaraDeputadosAPI extends RESTDataSource {
   baseURL = "https://dadosabertos.camara.leg.br/api/v2/";
 
-  async getDeputados() {
-    const { dados } = await this.get<ResponseModel<DeputadoModel[]>>("deputados");
+  async getDeputados(page?: string | null, items?: string | null, query?: string | null) {
+    const params = [];
+
+    page && params.push(`pagina=${page}`);
+    items && params.push(`itens=${items}`);
+    query && params.push(`nome=${query}`);
+
+    const path = 'deputados' + (params.length > 0 ? '?' + params.join('&') : '');
+    const { dados } = await this.get<ResponseModel<DeputadoModel[]>>(path);
 
     return dados;
   }
