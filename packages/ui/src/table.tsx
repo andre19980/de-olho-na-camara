@@ -37,7 +37,7 @@ export default function DataTable({
   return (
     <Box>
       {cards.map((card: any) =>
-        <Card className={classes.card} key={card.id}>
+        <Card sx={{ borderRadius: 0 }} key={card.id}>
           <CardContent>
             <Stack
               direction="row"

@@ -63,8 +63,6 @@ export default function Table() {
     }
   }, []);
 
-  console.log("render");
-
   return (
     <>
       <TableMUI
@@ -80,6 +78,8 @@ export default function Table() {
         style={{
           margin: 'auto'
         }}
+        siblingCount={0}
+        boundaryCount={1}
         onChange={handleChangePage}
       />
     </>
