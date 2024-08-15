@@ -29,6 +29,11 @@ export default function DataTable({
 
   const cards =  end > data.length ? data.slice(start) : data.slice(start, end);
 
+  const getNameInitials = (name: string) => {
+    const initials = name.match(/[A-Z]/g);
+    return initials?.slice(0, 2).join("");
+  }
+
   return (
     <Box>
       {cards.map((card: any) =>
@@ -48,7 +53,7 @@ export default function DataTable({
                   textOverflow: 'ellipsis',
                 }}
               >
-                <Avatar>AA</Avatar>
+                <Avatar>{getNameInitials(card.nome)}</Avatar>
                 <Stack overflow="hidden">
                   <Typography
                     style={{
