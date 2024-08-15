@@ -1,3 +1,4 @@
+import { ElementType } from 'react';
 import {
   Stack,
   Typography,
@@ -10,13 +11,28 @@ import {
 
 import classes from "./table.module.css";
 
-export default function DataTable({ data }: { data: any }) {
-  const cards = data.slice(0, 5);
+interface DataTableProps {
+  data: any;
+  page: number;
+  items: number;
+  linkComponent?: ElementType;
+}
+
+export default function DataTable({
+  data,
+  page,
+  items,
+  linkComponent,
+}: DataTableProps) {
+  const start = (page - 1) * items;
+  const end = page * items;
+
+  const cards =  end > data.length ? data.slice(start) : data.slice(start, end);
 
   return (
     <Box>
       {cards.map((card: any) =>
-        <Card className={classes.card}>
+        <Card className={classes.card} key={card.id}>
           <CardContent>
             <Stack
               direction="row"
@@ -54,7 +70,15 @@ export default function DataTable({ data }: { data: any }) {
                 </Stack>
               </Stack>
 
-              <Button variant="outlined">ver</Button>
+              {linkComponent
+                ? <Button
+                    variant="outlined"
+                    component={linkComponent}
+                    to={{
+                      pathname: `deputados/${card.id}`,
+                    }}
+                  >ver</Button>
+                : <Button variant="outlined">ver</Button>}
             </Stack>
           </CardContent>
         </Card>

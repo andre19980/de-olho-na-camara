@@ -4,32 +4,10 @@ import classes from "./page.module.css";
 import { Unstable_Grid2 as Grid } from "@repo/ui";
 import Image from "next/image";
 import { Suspense } from "react";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect } from "react";
 import Autocomplete from "@/app/components/autocomplete";
 import Table from "@/app/components/table";
 
-interface PageProps {
-  searchParams?: {
-    nome?: string;
-    pagina?: string;
-  }
-}
-
-export default function Page({ searchParams }: PageProps): JSX.Element {
-  const { pagina } = searchParams ?? {};
-  const { replace } = useRouter();
-  const pathname = usePathname();
-
-  useEffect(() => {
-    if (!pagina) {
-      const params = new URLSearchParams(searchParams);
-      params.set('pagina', '1');
-
-      replace(`${pathname}?${params.toString()}`);
-    }
-  }, []);
-
+export default function Page() {
   return (
     <main className={classes.main}>
       <Grid

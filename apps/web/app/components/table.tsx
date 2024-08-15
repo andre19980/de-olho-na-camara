@@ -1,11 +1,12 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import TableMUI from "@repo/ui/table";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { gql } from "@/app/__generated__";
 import { useSuspenseQuery } from "@apollo/client";
-import { Unstable_Grid2 as Grid, Pagination } from "@repo/ui";
+import { Pagination } from "@repo/ui";
+import { NextLinkComposed } from "@/app/components/link";
 
 const GET_DEPUTADOS_SEARCH_RESULT = gql(`
   query DeputadosFilter($pagina: String, $itens: String, $query: String) {
@@ -52,9 +53,26 @@ export default function Table() {
     replace(`${pathname}?${params.toString()}`);
   }, []);
 
+  useEffect(() => {
+    if (!pageParam) {
+      const params = new URLSearchParams(searchParams);
+      params.set('pagina', '1');
+      setPage(1);
+
+      replace(`${pathname}?${params.toString()}`);
+    }
+  }, []);
+
+  console.log("render");
+
   return (
     <>
-      <TableMUI data={data} page={page} items={ITEMS_PER_PAGE} />
+      <TableMUI
+        data={data}
+        page={page}
+        items={ITEMS_PER_PAGE}
+        linkComponent={NextLinkComposed}
+      />
       <Pagination
         count={totalPages}
         color="primary"
