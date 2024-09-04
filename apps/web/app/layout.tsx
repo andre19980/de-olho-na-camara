@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ApolloWrapper } from "@/app/_lib/apollo-provider";
 import { AppRouterCacheProvider } from "@repo/ui";
+import Drawer from "@/app/components/drawer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +22,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <ApolloWrapper>
           <AppRouterCacheProvider>
-            {children}
+            <Drawer>
+              {children}
+            </Drawer>
           </AppRouterCacheProvider>
         </ApolloWrapper>
       </body>

@@ -12,7 +12,11 @@ import {
 import classes from "./table.module.css";
 
 interface DataTableProps {
-  data: any;
+  data: {
+    title: string;
+    id: string;
+    subtitle: string;
+  }[];
   page: number;
   items: number;
   linkComponent?: ElementType;
@@ -36,7 +40,7 @@ export default function DataTable({
 
   return (
     <Box>
-      {cards.map((card: any) =>
+      {cards.map((card) =>
         <Card sx={{ borderRadius: 0 }} key={card.id}>
           <CardContent>
             <Stack
@@ -53,7 +57,7 @@ export default function DataTable({
                   textOverflow: 'ellipsis',
                 }}
               >
-                <Avatar>{getNameInitials(card.nome)}</Avatar>
+                <Avatar>{getNameInitials(card.title)}</Avatar>
                 <Stack overflow="hidden">
                   <Typography
                     style={{
@@ -61,7 +65,7 @@ export default function DataTable({
                       overflow: 'hidden',
                     }}
                   >
-                    {card.nome}
+                    {card.title}
                   </Typography>
                   <Typography
                     fontSize={14}
@@ -70,7 +74,7 @@ export default function DataTable({
                       overflow: 'hidden',
                     }}
                   >
-                    {card.partido.sigla} | {card.siglaUf}
+                    {card.subtitle}
                   </Typography>
                 </Stack>
               </Stack>

@@ -1,76 +1,37 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Pagination, Skeleton } from "@repo/ui";
 import TableMUI from "@repo/ui/table";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { gql } from "@/app/__generated__";
-import { useSuspenseQuery } from "@apollo/client";
-import { Pagination } from "@repo/ui";
 import { NextLinkComposed } from "@/app/components/link";
-
-const GET_DEPUTADOS_SEARCH_RESULT = gql(`
-  query DeputadosFilter($pagina: String, $itens: String, $query: String) {
-    deputados(pagina: $pagina, itens: $itens, query: $query) {
-      id
-      nome
-      siglaUf
-      email
-      partido {
-        sigla
-      }
-    }
-  }
-`);
-
-const ITEMS_PER_PAGE = 5;
+import { useDataTable, usePagination } from "@/app/components/table.hooks";
 
 export default function Table() {
-  const { replace } = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
-  const queryParam = searchParams.get('nome');
-  const pageParam = searchParams.get('pagina');
-  const decodedQuery = queryParam && decodeURIComponent(queryParam);
-  const [page, setPage] = useState<number>(Number(pageParam));
-  
-  const { data: { deputados } } = useSuspenseQuery(GET_DEPUTADOS_SEARCH_RESULT);
-  const normalizedDeputados = deputados.map(deputado => deputado.nome.toLocaleLowerCase());
-  
-  const data = decodedQuery
-    ? deputados.filter((_, idx) =>
-      normalizedDeputados[idx]?.match(decodedQuery.toLocaleLowerCase()))
-    : deputados;
-  
-  const totalPages = data.length > 0 && Math.ceil(data.length / ITEMS_PER_PAGE) || 0;
-
-  const handleChangePage = useCallback((
-    event: React.ChangeEvent<unknown>,
-    value: number,
-  ) => {
-    setPage(value);
-    const params = new URLSearchParams(searchParams);
-    params.set('pagina', value.toString());
-    replace(`${pathname}?${params.toString()}`);
-  }, []);
-
-  useEffect(() => {
-    if (!pageParam) {
-      const params = new URLSearchParams(searchParams);
-      params.set('pagina', '1');
-      setPage(1);
-
-      replace(`${pathname}?${params.toString()}`);
-    }
-  }, []);
+  const { data } = useDataTable({ searchParams });
+  const {
+    totalPages,
+    page,
+    loading,
+    items,
+    handleChangePage,
+  } = usePagination({ dataLength: data.length, searchParams });
 
   return (
     <>
-      <TableMUI
-        data={data}
-        page={page}
-        items={ITEMS_PER_PAGE}
-        linkComponent={NextLinkComposed}
-      />
+      {loading
+        ? <Skeleton
+            variant="rectangular"
+            width="100%"
+            height={440}
+            animation="wave" 
+          />
+        : <TableMUI
+            data={data}
+            page={page}
+            items={items}
+            linkComponent={NextLinkComposed}
+          />}
       <Pagination
         count={totalPages}
         color="primary"

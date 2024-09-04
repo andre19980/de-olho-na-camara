@@ -7,6 +7,7 @@
     "./code": "./src/code.tsx",
     "./table": "./src/table.tsx",
     "./autocomplete": "./src/autocomplete.tsx",
+    "./icons": "./src/icons.tsx",
     ".": "./src/index.ts"
   },
   "scripts": {
