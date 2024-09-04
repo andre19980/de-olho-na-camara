@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback } from "react";
 import { gql } from "@/app/__generated__";
 import { useSuspenseQuery } from "@apollo/client";
 import { ReadonlyURLSearchParams, usePathname, useRouter } from "next/navigation";
-import { Deputado } from "../__generated__/graphql";
 
 const GET_DEPUTADOS_SEARCH_RESULT = gql(`
   query DeputadosFilter($pagina: String, $itens: String, $query: String) {
