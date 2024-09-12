@@ -1,11 +1,10 @@
-"use client";
-
+import { Suspense } from "react";
 import classes from "./page.module.css";
 import { Unstable_Grid2 as Grid } from "@repo/ui";
 import Image from "next/image";
-import { Suspense } from "react";
 import Autocomplete from "@/app/components/autocomplete";
 import Table from "@/app/components/table";
+import Skeleton from "@/app/components/skeleton";
 
 export default function Page() {
   return (
@@ -26,7 +25,7 @@ export default function Page() {
           />
         </Grid>
         <Grid display="flex" justifyContent="center" xs={12}>
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Skeleton height={59} width={300} />}>
             <Autocomplete />
           </Suspense>
         </Grid>
@@ -37,7 +36,7 @@ export default function Page() {
           rowGap={2}
           justifyContent="center"  
         >
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Skeleton height={440} />}>
             <Table />
           </Suspense>
         </Grid>

@@ -1,10 +1,11 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { Pagination, Skeleton } from "@repo/ui";
+import { Pagination } from "@repo/ui";
 import TableMUI from "@repo/ui/table";
 import { NextLinkComposed } from "@/app/components/link";
 import { useDataTable, usePagination } from "@/app/components/table.hooks";
+import Skeleton from "./skeleton";
 
 export default function Table() {
   const searchParams = useSearchParams();
@@ -20,12 +21,7 @@ export default function Table() {
   return (
     <>
       {loading
-        ? <Skeleton
-            variant="rectangular"
-            width="100%"
-            height={440}
-            animation="wave" 
-          />
+        ? <Skeleton height={440} />
         : <TableMUI
             data={data}
             page={page}
