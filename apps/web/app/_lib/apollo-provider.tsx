@@ -11,7 +11,9 @@ import {
 
 function makeClient() {
   const httpLink = new HttpLink({
-      uri: "http://localhost:4000",
+    uri: process.env.NODE_ENV === "production"
+      ? process.env.PRODUCTION_API_URL
+      : process.env.LOCAL_API_URL
   });
 
   return new ApolloClient({

@@ -21,12 +21,15 @@ const ITEMS_PER_PAGE = 5;
 
 interface DataTableHookProps {
   searchParams: ReadonlyURLSearchParams;
+  deputados: {
+    title: string;
+    id: string;
+    subtitle: string
+  }[];
 }
 
-export function useDataTable({ searchParams }: DataTableHookProps) {
-  const queryParam = searchParams.get('nome');
-  const decodedQuery = queryParam && decodeURIComponent(queryParam);
 
+export function useDataTable() {
   const { data: { deputados } } = useSuspenseQuery(GET_DEPUTADOS_SEARCH_RESULT);
 
   const mappedDeputados = deputados.map(deputado => ({
@@ -35,14 +38,21 @@ export function useDataTable({ searchParams }: DataTableHookProps) {
     subtitle: `${deputado.partido.sigla} | ${deputado.siglaUf}`
   }))
 
-  const normalizedDeputados = mappedDeputados.map(deputado => deputado.title.toLocaleLowerCase());
-  
-  const data = decodedQuery
-  ? mappedDeputados.filter((_, idx) =>
-    normalizedDeputados[idx]?.match(decodedQuery.toLocaleLowerCase()))
-  : mappedDeputados;
+  return { deputados: mappedDeputados };
+}
 
-  return { data };
+export const useFilteredData = ({ deputados, searchParams }: DataTableHookProps) => {
+  const queryParam = searchParams.get('nome');
+  const decodedQuery = queryParam && decodeURIComponent(queryParam);
+
+  const normalizedDeputados = deputados.map(deputado => deputado.title.toLocaleLowerCase());
+
+  const data = decodedQuery
+  ? deputados.filter((_, idx) =>
+    normalizedDeputados[idx]?.match(decodedQuery.toLocaleLowerCase()))
+  : deputados;
+
+  return data;
 }
 
 

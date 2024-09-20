@@ -4,12 +4,13 @@ import { useSearchParams } from "next/navigation";
 import { Pagination } from "@repo/ui";
 import TableMUI from "@repo/ui/table";
 import { NextLinkComposed } from "@/app/components/link";
-import { useDataTable, usePagination } from "@/app/components/table.hooks";
+import { useDataTable, useFilteredData, usePagination } from "@/app/components/table.hooks";
 import Skeleton from "./skeleton";
 
 export default function Table() {
+  const { deputados } = useDataTable();
   const searchParams = useSearchParams();
-  const { data } = useDataTable({ searchParams });
+  const data = useFilteredData({ deputados, searchParams })
   const {
     totalPages,
     page,
