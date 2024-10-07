@@ -10,9 +10,7 @@ const GET_DEPUTADOS_SEARCH_RESULT = gql(`
       nome
       siglaUf
       email
-      partido {
-        sigla
-      }
+      siglaPartido
     }
   }
 `);
@@ -35,7 +33,7 @@ export function useDataTable() {
   const mappedDeputados = deputados.map(deputado => ({
     title: deputado.nome,
     id: deputado.id,
-    subtitle: `${deputado.partido.sigla} | ${deputado.siglaUf}`
+    subtitle: `${deputado.siglaPartido} | ${deputado.siglaUf}`
   }))
 
   return { deputados: mappedDeputados };
@@ -48,9 +46,9 @@ export const useFilteredData = ({ deputados, searchParams }: DataTableHookProps)
   const normalizedDeputados = deputados.map(deputado => deputado.title.toLocaleLowerCase());
 
   const data = decodedQuery
-  ? deputados.filter((_, idx) =>
-    normalizedDeputados[idx]?.match(decodedQuery.toLocaleLowerCase()))
-  : deputados;
+    ? deputados.filter((_, idx) =>
+      normalizedDeputados[idx]?.match(decodedQuery.toLocaleLowerCase()))
+    : deputados;
 
   return data;
 }

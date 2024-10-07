@@ -1,5 +1,4 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { DeputadoModel, PartidoModel } from './models';
 import { DataSourceContext } from './context';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -8,6 +7,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string; }
@@ -29,43 +29,28 @@ export type Deputado = {
   /** Name of the congressperson */
   nome: Scalars['String']['output'];
   /** Party of the congressperson */
-  partido: Partido;
+  siglaPartido?: Maybe<Scalars['String']['output']>;
   /** Federal State of the congressperson */
   siglaUf: Scalars['String']['output'];
+  /** Contact number of congressperson's office */
+  telefone?: Maybe<Scalars['String']['output']>;
   /** REST endpoint of congressperson's data */
   uri: Scalars['String']['output'];
   /** Url of the congressperson's photo */
   urlFoto?: Maybe<Scalars['String']['output']>;
 };
 
-/** Partido represents the party of a congressperson */
-export type Partido = {
-  __typename?: 'Partido';
-  id: Scalars['ID']['output'];
-  nome: Scalars['String']['output'];
-  numeroEleitoral?: Maybe<Scalars['Int']['output']>;
-  sigla: Scalars['String']['output'];
-  status: PartidoStatus;
-  uri: Scalars['String']['output'];
-  urlFacebook?: Maybe<Scalars['String']['output']>;
-  urlLogo?: Maybe<Scalars['String']['output']>;
-  urlWebSite?: Maybe<Scalars['String']['output']>;
-};
-
-export type PartidoStatus = {
-  __typename?: 'PartidoStatus';
-  data?: Maybe<Scalars['String']['output']>;
-  idLegislatura: Scalars['ID']['output'];
-  situacao?: Maybe<Scalars['String']['output']>;
-  totalMembros?: Maybe<Scalars['Int']['output']>;
-  totalPosse?: Maybe<Scalars['Int']['output']>;
-  uriMembros?: Maybe<Scalars['String']['output']>;
-};
-
 export type Query = {
   __typename?: 'Query';
+  /** GET deputatado */
+  deputado: Deputado;
   /** GET deputatados */
   deputados: Array<Deputado>;
+};
+
+
+export type QueryDeputadoArgs = {
+  id: Scalars['String']['input'];
 };
 
 
@@ -147,11 +132,9 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
-  Deputado: ResolverTypeWrapper<DeputadoModel>;
+  Deputado: ResolverTypeWrapper<Deputado>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
-  Partido: ResolverTypeWrapper<PartidoModel>;
-  PartidoStatus: ResolverTypeWrapper<PartidoStatus>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
 };
@@ -159,11 +142,9 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Boolean: Scalars['Boolean']['output'];
-  Deputado: DeputadoModel;
+  Deputado: Deputado;
   ID: Scalars['ID']['output'];
   Int: Scalars['Int']['output'];
-  Partido: PartidoModel;
-  PartidoStatus: PartidoStatus;
   Query: {};
   String: Scalars['String']['output'];
 };
@@ -173,44 +154,21 @@ export type DeputadoResolvers<ContextType = DataSourceContext, ParentType extend
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   idLegislatura?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   nome?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  partido?: Resolver<ResolversTypes['Partido'], ParentType, ContextType>;
+  siglaPartido?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   siglaUf?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  telefone?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   uri?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   urlFoto?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type PartidoResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Partido'] = ResolversParentTypes['Partido']> = {
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  nome?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  numeroEleitoral?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  sigla?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  status?: Resolver<ResolversTypes['PartidoStatus'], ParentType, ContextType>;
-  uri?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  urlFacebook?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  urlLogo?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  urlWebSite?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type PartidoStatusResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['PartidoStatus'] = ResolversParentTypes['PartidoStatus']> = {
-  data?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  idLegislatura?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  situacao?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  totalMembros?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  totalPosse?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  uriMembros?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type QueryResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  deputado?: Resolver<ResolversTypes['Deputado'], ParentType, ContextType, RequireFields<QueryDeputadoArgs, 'id'>>;
   deputados?: Resolver<Array<ResolversTypes['Deputado']>, ParentType, ContextType, Partial<QueryDeputadosArgs>>;
 };
 
 export type Resolvers<ContextType = DataSourceContext> = {
   Deputado?: DeputadoResolvers<ContextType>;
-  Partido?: PartidoResolvers<ContextType>;
-  PartidoStatus?: PartidoStatusResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
 };
 

@@ -14,7 +14,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\n  query Deputados($pagina: String, $itens: String) {\n    deputados(pagina: $pagina, itens: $itens) {\n      nome\n    }\n  }\n": types.DeputadosDocument,
-    "\n  query DeputadosFilter($pagina: String, $itens: String, $query: String) {\n    deputados(pagina: $pagina, itens: $itens, query: $query) {\n      id\n      nome\n      siglaUf\n      email\n      partido {\n        sigla\n      }\n    }\n  }\n": types.DeputadosFilterDocument,
+    "\n  query DeputadosFilter($pagina: String, $itens: String, $query: String) {\n    deputados(pagina: $pagina, itens: $itens, query: $query) {\n      id\n      nome\n      siglaUf\n      email\n      siglaPartido\n    }\n  }\n": types.DeputadosFilterDocument,
 };
 
 /**
@@ -38,7 +38,7 @@ export function gql(source: "\n  query Deputados($pagina: String, $itens: String
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query DeputadosFilter($pagina: String, $itens: String, $query: String) {\n    deputados(pagina: $pagina, itens: $itens, query: $query) {\n      id\n      nome\n      siglaUf\n      email\n      partido {\n        sigla\n      }\n    }\n  }\n"): (typeof documents)["\n  query DeputadosFilter($pagina: String, $itens: String, $query: String) {\n    deputados(pagina: $pagina, itens: $itens, query: $query) {\n      id\n      nome\n      siglaUf\n      email\n      partido {\n        sigla\n      }\n    }\n  }\n"];
+export function gql(source: "\n  query DeputadosFilter($pagina: String, $itens: String, $query: String) {\n    deputados(pagina: $pagina, itens: $itens, query: $query) {\n      id\n      nome\n      siglaUf\n      email\n      siglaPartido\n    }\n  }\n"): (typeof documents)["\n  query DeputadosFilter($pagina: String, $itens: String, $query: String) {\n    deputados(pagina: $pagina, itens: $itens, query: $query) {\n      id\n      nome\n      siglaUf\n      email\n      siglaPartido\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

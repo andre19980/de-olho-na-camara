@@ -6,7 +6,7 @@ export type ResponseModel<T> = {
   }[];
 }
 
-export type DeputadoModel = {
+export type DeputadoAllModel = {
   id: number;
   uri: string;
   nome: string;
@@ -18,21 +18,35 @@ export type DeputadoModel = {
   email: string;
 }
 
-export type PartidoModel = {
-  id: number;
-  nome: string;
-  numeroEleitoral: number;
-  sigla: string;
-  status: {
-    data: string;
-    idLegislatura: number;
-    situacao: string;
-    totalMembros: string;
-    totalPosse: string;
-    uriMembros: string;
-  };
-  uri: string;
-  urlFacebook: string;
-  urlLogo: string;
-  urlWebSite: string;
+export type DeputadoOneModel = {
+  id: number,
+  nomeCivil: string,
+  redeSocial: [string],
+  ultimoStatus: {
+    condicaoEleitoral: string,
+    data: string,
+    descricaoStatus: string,
+    email: string,
+    gabinete: {
+      andar: string,
+      email: string,
+      nome: string,
+      predio: string,
+      sala: string,
+      telefone: string
+      },
+    id: number,
+    idLegislatura: number,
+    nome: string,
+    nomeEleitoral: string,
+    siglaPartido: string,
+    siglaUf: string,
+    situacao: string,
+    uri: string,
+    uriPartido: string,
+    urlFoto: string
+  },
+  uri: string,
+  urlWebsite: string
 }
+

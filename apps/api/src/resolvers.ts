@@ -5,13 +5,9 @@ export const resolvers: Resolvers = {
     deputados: (_, { pagina, itens, query }, { dataSources }) => {
       return dataSources.camaraDeputadosAPI.getDeputados(pagina, itens, query);
     },
+    deputado: (_, { id }, { dataSources }) => {
+      
+      return dataSources.camaraDeputadosAPI.getDeputado(id);
+    }
   },
-  Deputado: {
-    partido: ({ uriPartido }, _, { dataSources }) => {
-      const match = uriPartido.match(/\/partidos\/(\d+)/);
-      const partidoId = parseInt(match?.[1] ?? "");
-
-      return dataSources.camaraDeputadosAPI.getPartido(partidoId);
-    },
-  }
 };

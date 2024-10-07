@@ -28,43 +28,28 @@ export type Deputado = {
   /** Name of the congressperson */
   nome: Scalars['String']['output'];
   /** Party of the congressperson */
-  partido: Partido;
+  siglaPartido?: Maybe<Scalars['String']['output']>;
   /** Federal State of the congressperson */
   siglaUf: Scalars['String']['output'];
+  /** Contact number of congressperson's office */
+  telefone?: Maybe<Scalars['String']['output']>;
   /** REST endpoint of congressperson's data */
   uri: Scalars['String']['output'];
   /** Url of the congressperson's photo */
   urlFoto?: Maybe<Scalars['String']['output']>;
 };
 
-/** Partido represents the party of a congressperson */
-export type Partido = {
-  __typename?: 'Partido';
-  id: Scalars['ID']['output'];
-  nome: Scalars['String']['output'];
-  numeroEleitoral?: Maybe<Scalars['Int']['output']>;
-  sigla: Scalars['String']['output'];
-  status: PartidoStatus;
-  uri: Scalars['String']['output'];
-  urlFacebook?: Maybe<Scalars['String']['output']>;
-  urlLogo?: Maybe<Scalars['String']['output']>;
-  urlWebSite?: Maybe<Scalars['String']['output']>;
-};
-
-export type PartidoStatus = {
-  __typename?: 'PartidoStatus';
-  data?: Maybe<Scalars['String']['output']>;
-  idLegislatura: Scalars['ID']['output'];
-  situacao?: Maybe<Scalars['String']['output']>;
-  totalMembros?: Maybe<Scalars['Int']['output']>;
-  totalPosse?: Maybe<Scalars['Int']['output']>;
-  uriMembros?: Maybe<Scalars['String']['output']>;
-};
-
 export type Query = {
   __typename?: 'Query';
+  /** GET deputatado */
+  deputado: Deputado;
   /** GET deputatados */
   deputados: Array<Deputado>;
+};
+
+
+export type QueryDeputadoArgs = {
+  id: Scalars['String']['input'];
 };
 
 
@@ -89,8 +74,8 @@ export type DeputadosFilterQueryVariables = Exact<{
 }>;
 
 
-export type DeputadosFilterQuery = { __typename?: 'Query', deputados: Array<{ __typename?: 'Deputado', id: string, nome: string, siglaUf: string, email?: string | null, partido: { __typename?: 'Partido', sigla: string } }> };
+export type DeputadosFilterQuery = { __typename?: 'Query', deputados: Array<{ __typename?: 'Deputado', id: string, nome: string, siglaUf: string, email?: string | null, siglaPartido?: string | null }> };
 
 
 export const DeputadosDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Deputados"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pagina"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"itens"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deputados"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pagina"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pagina"}}},{"kind":"Argument","name":{"kind":"Name","value":"itens"},"value":{"kind":"Variable","name":{"kind":"Name","value":"itens"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nome"}}]}}]}}]} as unknown as DocumentNode<DeputadosQuery, DeputadosQueryVariables>;
-export const DeputadosFilterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"DeputadosFilter"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pagina"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"itens"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"query"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deputados"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pagina"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pagina"}}},{"kind":"Argument","name":{"kind":"Name","value":"itens"},"value":{"kind":"Variable","name":{"kind":"Name","value":"itens"}}},{"kind":"Argument","name":{"kind":"Name","value":"query"},"value":{"kind":"Variable","name":{"kind":"Name","value":"query"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nome"}},{"kind":"Field","name":{"kind":"Name","value":"siglaUf"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"partido"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sigla"}}]}}]}}]}}]} as unknown as DocumentNode<DeputadosFilterQuery, DeputadosFilterQueryVariables>;
+export const DeputadosFilterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"DeputadosFilter"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pagina"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"itens"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"query"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deputados"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pagina"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pagina"}}},{"kind":"Argument","name":{"kind":"Name","value":"itens"},"value":{"kind":"Variable","name":{"kind":"Name","value":"itens"}}},{"kind":"Argument","name":{"kind":"Name","value":"query"},"value":{"kind":"Variable","name":{"kind":"Name","value":"query"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nome"}},{"kind":"Field","name":{"kind":"Name","value":"siglaUf"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"siglaPartido"}}]}}]}}]} as unknown as DocumentNode<DeputadosFilterQuery, DeputadosFilterQueryVariables>;

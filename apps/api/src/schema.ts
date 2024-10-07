@@ -4,6 +4,8 @@ export const typeDefs = gql`
   type Query {
     "GET deputatados"
     deputados(pagina: String, itens: String, query: String): [Deputado!]!
+    "GET deputatado"
+    deputado(id: String!): Deputado!
   }
    
   "Deputado represents a congressperson in the federal congress"
@@ -15,7 +17,7 @@ export const typeDefs = gql`
     "Name of the congressperson"
     nome: String!
     "Party of the congressperson"
-    partido: Partido!
+    siglaPartido: String
     "Federal State of the congressperson"
     siglaUf: String!
     "Identifier number of the congressperson's mandate"
@@ -24,27 +26,7 @@ export const typeDefs = gql`
     urlFoto: String
     "e-mail of the congressperson"
     email: String
-  }
-
-  "Partido represents the party of a congressperson"
-  type Partido {
-    id: ID!
-    nome: String!
-    numeroEleitoral: Int
-    sigla: String!
-    status: PartidoStatus!
-    uri: String!
-    urlFacebook: String
-    urlLogo: String
-    urlWebSite: String
-  }
-
-  type PartidoStatus {
-    data: String
-    idLegislatura: ID!
-    situacao: String
-    totalMembros: Int
-    totalPosse: Int
-    uriMembros: String
+    "Contact number of congressperson's office"
+    telefone: String
   }
 `;

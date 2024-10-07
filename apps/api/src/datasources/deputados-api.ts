@@ -1,5 +1,5 @@
 import { RESTDataSource } from "@apollo/datasource-rest";
-import { ResponseModel, DeputadoModel, PartidoModel } from "../models";
+import { ResponseModel, DeputadoAllModel, DeputadoOneModel } from "../models";
 
 export class CamaraDeputadosAPI extends RESTDataSource {
   baseURL = "https://dadosabertos.camara.leg.br/api/v2/";
@@ -12,14 +12,26 @@ export class CamaraDeputadosAPI extends RESTDataSource {
     query && params.push(`nome=${query}`);
 
     const path = 'deputados' + (params.length > 0 ? '?' + params.join('&') : '');
-    const { dados } = await this.get<ResponseModel<DeputadoModel[]>>(path);
+    const { dados } = await this.get<ResponseModel<DeputadoAllModel[]>>(path);
 
     return dados;
   }
 
-  async getPartido(partidoId: number) {
-    const { dados } = await this.get<ResponseModel<PartidoModel>>(`partidos/${encodeURIComponent(partidoId)}`);
+  async getDeputado(id: string) {
+    const { dados } = await this.get<ResponseModel<DeputadoOneModel>>(`deputados/${encodeURIComponent(id)}`);
 
-    return dados;
+    const deputado = {
+      id: dados.id,
+      uri: dados.uri,
+      nome: dados.ultimoStatus.nomeEleitoral,
+      siglaPartido: dados.ultimoStatus.siglaPartido,
+      siglaUf: dados.ultimoStatus.siglaUf,
+      idLegislatura: dados.ultimoStatus.idLegislatura,
+      urlFoto: dados.ultimoStatus.urlFoto,
+      email: dados.ultimoStatus.email,
+      telefone: dados.ultimoStatus.gabinete.telefone,
+    };
+
+    return deputado;
   }
 }

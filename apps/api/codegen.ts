@@ -7,10 +7,7 @@ const config: CodegenConfig = {
       plugins: ["typescript", "typescript-resolvers"],
       config: {
         contextType: './context#DataSourceContext',
-        mappers: {
-          Deputado: './models#DeputadoModel',
-          Partido: './models#PartidoModel',
-        }
+        mappers: {},
       },
     },
   },
