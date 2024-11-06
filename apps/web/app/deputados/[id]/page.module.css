@@ -1,0 +1,8 @@
+.main {
+  padding: 24px;
+  height: 100vh;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.47);
+}

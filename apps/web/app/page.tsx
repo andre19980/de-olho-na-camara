@@ -1,10 +1,13 @@
 import { Suspense } from "react";
-import classes from "./page.module.css";
-import { Unstable_Grid2 as Grid } from "@repo/ui";
 import Image from "next/image";
+import { Unstable_Grid2 as Grid } from "@repo/ui";
+
 import Autocomplete from "@/app/components/autocomplete";
 import Table from "@/app/components/table";
-import Skeleton from "@/app/components/skeleton";
+
+import { gql } from "./__generated__";
+
+import classes from "./page.module.css";
 
 export default function Page() {
   return (
@@ -25,7 +28,7 @@ export default function Page() {
           />
         </Grid>
         <Grid display="flex" justifyContent="center" xs={12}>
-          <Suspense fallback={<Skeleton height={59} width={300} />}>
+          <Suspense>
             <Autocomplete />
           </Suspense>
         </Grid>
@@ -34,9 +37,9 @@ export default function Page() {
           display="flex"
           flexDirection="column"
           rowGap={2}
-          justifyContent="center"  
+          justifyContent="center"
         >
-          <Suspense fallback={<Skeleton height={440} />}>
+          <Suspense>
             <Table />
           </Suspense>
         </Grid>

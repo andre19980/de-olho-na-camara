@@ -22,9 +22,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <ApolloWrapper>
           <AppRouterCacheProvider>
-            <Drawer>
-              {children}
-            </Drawer>
+            <Drawer>{children}</Drawer>
           </AppRouterCacheProvider>
         </ApolloWrapper>
       </body>

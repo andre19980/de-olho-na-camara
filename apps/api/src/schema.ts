@@ -11,7 +11,7 @@ export const typeDefs = gql`
   "Deputado represents a congressperson in the federal congress"
   type Deputado {
     "Identifier number of a congressperson"
-    id: ID!
+    id: Int!
     "REST endpoint of congressperson's data"
     uri: String!
     "Name of the congressperson"

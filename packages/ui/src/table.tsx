@@ -14,7 +14,7 @@ import classes from "./table.module.css";
 interface DataTableProps {
   data: {
     title: string;
-    id: string;
+    id: number;
     subtitle: string;
   }[];
   page: number;
@@ -84,7 +84,7 @@ export default function DataTable({
                     variant="outlined"
                     component={linkComponent}
                     to={{
-                      pathname: `deputados/${card.id}`,
+                      pathname: `deputados/${encodeURIComponent(card.id)}`,
                     }}
                   >ver</Button>
                 : <Button variant="outlined">ver</Button>}

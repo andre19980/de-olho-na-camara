@@ -23,7 +23,7 @@ export type Deputado = {
   /** e-mail of the congressperson */
   email?: Maybe<Scalars['String']['output']>;
   /** Identifier number of a congressperson */
-  id: Scalars['ID']['output'];
+  id: Scalars['Int']['output'];
   /** Identifier number of the congressperson's mandate */
   idLegislatura: Scalars['Int']['output'];
   /** Name of the congressperson */
@@ -133,7 +133,6 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   Deputado: ResolverTypeWrapper<Deputado>;
-  ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
@@ -143,7 +142,6 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Boolean: Scalars['Boolean']['output'];
   Deputado: Deputado;
-  ID: Scalars['ID']['output'];
   Int: Scalars['Int']['output'];
   Query: {};
   String: Scalars['String']['output'];
@@ -151,7 +149,7 @@ export type ResolversParentTypes = {
 
 export type DeputadoResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Deputado'] = ResolversParentTypes['Deputado']> = {
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   idLegislatura?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   nome?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   siglaPartido?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
