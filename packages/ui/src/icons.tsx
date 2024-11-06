@@ -1,1 +1,4 @@
-export { Menu } from '@mui/icons-material';
+export {
+  Menu,
+  PersonOutlineOutlined as PersonOutlined,
+} from '@mui/icons-material';

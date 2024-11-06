@@ -11,7 +11,7 @@ export default function Skeleton({ height, width }: SkeletonProps) {
       variant="rectangular"
       width={width ?? "100%"}
       height={height}
-      animation="wave" 
+      animation="wave"
     />
-  )
+  );
 }

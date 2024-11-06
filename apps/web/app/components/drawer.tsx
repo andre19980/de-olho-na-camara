@@ -13,7 +13,7 @@ import {
 } from "@repo/ui";
 import { Menu } from "@repo/ui/icons";
 
-const SECTIONS = ['Home', 'Sobre']
+const SECTIONS = ["Home", "Sobre"];
 
 export default function TemporaryDrawer({ children }: any) {
   const [open, setOpen] = useState(false);
@@ -27,7 +27,7 @@ export default function TemporaryDrawer({ children }: any) {
       sx={{
         width: 250,
         background: "#F5F5F5",
-        height: "100%"
+        height: "100%",
       }}
       role="presentation"
       onClick={toggleDrawer(false)}
@@ -46,16 +46,18 @@ export default function TemporaryDrawer({ children }: any) {
 
   return (
     <Container disableGutters sx={{ paddingTop: "56px" }}>
-      <Box sx={{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: "100vw",
-        background: "#50B748",
-        height: 56,
-        display: "flex",
-        alignContent: "center",
-      }}>
+      <Box
+        sx={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          background: "#50B748",
+          height: 56,
+          display: "flex",
+          alignContent: "center",
+        }}
+      >
         <IconButton aria-label="menu" onClick={toggleDrawer(true)}>
           <Menu sx={{ color: "white" }} />
         </IconButton>
