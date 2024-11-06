@@ -16,7 +16,6 @@ if (process.env.NODE_ENV === "development") {
   loadErrorMessages();
 }
 
-
 function makeClient() {
   const httpLink = new HttpLink({
     uri: process.env.NEXT_PUBLIC_API_URL,
@@ -47,9 +46,9 @@ export function ApolloWrapper({ children }: React.PropsWithChildren) {
   );
 }
 
-
 const httpLink = new HttpLink({
-  uri: process.env.NODE_ENV === "production"
-    ? process.env.PRODUCTION_API_URL
-    : process.env.LOCAL_API_URL
+  uri:
+    process.env.NODE_ENV === "production"
+      ? process.env.PRODUCTION_API_URL
+      : process.env.LOCAL_API_URL,
 });
