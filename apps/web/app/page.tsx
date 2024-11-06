@@ -5,8 +5,6 @@ import { Unstable_Grid2 as Grid } from "@repo/ui";
 import Autocomplete from "@/app/components/autocomplete";
 import Table from "@/app/components/table";
 
-import { gql } from "./__generated__";
-
 import classes from "./page.module.css";
 
 export default function Page() {

@@ -45,10 +45,3 @@ export function ApolloWrapper({ children }: React.PropsWithChildren) {
     </ApolloNextAppProvider>
   );
 }
-
-const httpLink = new HttpLink({
-  uri:
-    process.env.NODE_ENV === "production"
-      ? process.env.PRODUCTION_API_URL
-      : process.env.LOCAL_API_URL,
-});

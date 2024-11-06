@@ -2,13 +2,13 @@
 
 import { Suspense } from "react";
 import { useReadQuery, QueryRef, useBackgroundQuery } from "@apollo/client";
-import { Unstable_Grid2 as Grid, Box, Card, CardContent } from "@repo/ui";
+import { Unstable_Grid2 as Grid, Card, CardContent } from "@repo/ui";
 import Image from "next/image";
 import { gql } from "@/app/__generated__";
 
 import { DeputadoQuery } from "@/app/__generated__/graphql";
 
-import { PersonOutlined } from "@repo/ui/icons";
+// import { PersonOutlined } from "@repo/ui/icons";
 import classes from "./page.module.css";
 
 const GET_DEPUTADO = gql(`
