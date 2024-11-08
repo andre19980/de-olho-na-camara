@@ -70,16 +70,6 @@ export type QueryDeputadosArgs = {
   query?: InputMaybe<Scalars["String"]["input"]>;
 };
 
-export type DeputadosQueryVariables = Exact<{
-  pagina?: InputMaybe<Scalars["String"]["input"]>;
-  itens?: InputMaybe<Scalars["String"]["input"]>;
-}>;
-
-export type DeputadosQuery = {
-  __typename?: "Query";
-  deputados: Array<{ __typename?: "Deputado"; nome: string }>;
-};
-
 export type DeputadosFilterQueryVariables = Exact<{
   pagina?: InputMaybe<Scalars["String"]["input"]>;
   itens?: InputMaybe<Scalars["String"]["input"]>;
@@ -118,67 +108,6 @@ export type DeputadoQuery = {
   };
 };
 
-export const DeputadosDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "Deputados" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "pagina" },
-          },
-          type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
-        },
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "itens" },
-          },
-          type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "deputados" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagina" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "pagina" },
-                },
-              },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "itens" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "itens" },
-                },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "nome" } },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<DeputadosQuery, DeputadosQueryVariables>;
 export const DeputadosFilterDocument = {
   kind: "Document",
   definitions: [

@@ -6,8 +6,7 @@ export const resolvers: Resolvers = {
       return dataSources.camaraDeputadosAPI.getDeputados(pagina, itens, query);
     },
     deputado: (_, { id }, { dataSources }) => {
-      
       return dataSources.camaraDeputadosAPI.getDeputado(id);
-    }
+    },
   },
 };

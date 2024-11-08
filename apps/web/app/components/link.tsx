@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import NextLink, { LinkProps as NextLinkProps } from "next/link";
 import { styled } from "@repo/ui";

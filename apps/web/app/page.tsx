@@ -1,19 +1,21 @@
 import { Suspense } from "react";
 import Image from "next/image";
-import { Unstable_Grid2 as Grid } from "@repo/ui";
+import { CircularProgress, Unstable_Grid2 as Grid } from "@repo/ui";
 
 import Autocomplete from "@/app/components/autocomplete";
 import Table from "@/app/components/table";
+import TableFilterProvider from "@/app/_contexts/table";
 
 import classes from "./page.module.css";
 
-export default function Page() {
+export default async function Page() {
   return (
     <main className={classes.main}>
       <Grid
         container
         flexDirection="column"
         justifyContent="center"
+        alignContent="center"
         rowSpacing={5}
       >
         <Grid display="flex" justifyContent="center" xs={12}>
@@ -25,22 +27,23 @@ export default function Page() {
             priority
           />
         </Grid>
-        <Grid display="flex" justifyContent="center" xs={12}>
-          <Suspense>
-            <Autocomplete />
-          </Suspense>
-        </Grid>
-        <Grid
-          xs={12}
-          display="flex"
-          flexDirection="column"
-          rowGap={2}
-          justifyContent="center"
-        >
-          <Suspense>
-            <Table />
-          </Suspense>
-        </Grid>
+        <Suspense fallback={<CircularProgress />}>
+          <TableFilterProvider>
+            <Grid display="flex" justifyContent="center" xs={12}>
+              <Autocomplete />
+            </Grid>
+
+            <Grid
+              xs={12}
+              display="flex"
+              flexDirection="column"
+              rowGap={2}
+              justifyContent="center"
+            >
+              <Table />
+            </Grid>
+          </TableFilterProvider>
+        </Suspense>
       </Grid>
     </main>
   );

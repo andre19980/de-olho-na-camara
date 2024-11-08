@@ -1,24 +1,17 @@
 "use client";
 
-import { gql } from "@/app/__generated__";
-import { useSuspenseQuery } from "@apollo/client";
+import { useContext } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Autocomplete as AutocompleMUI, TextField } from "@repo/ui";
-
-const GET_DEPUTADOS_NAMES = gql(`
-  query Deputados($pagina: String, $itens: String) {
-    deputados(pagina: $pagina, itens: $itens) {
-      nome
-    }
-  }
-`);
+import { TableFilterContext } from "@/app/_contexts/table";
 
 export default function Autocomplete() {
-  const { data = { deputados: [] } } = useSuspenseQuery(GET_DEPUTADOS_NAMES);
+  const context = useContext(TableFilterContext);
 
   const searchParams = useSearchParams();
-  const autocompleteOptions = data.deputados.map((deputado) => deputado.nome);
+  const autocompleteOptions =
+    context?.deputados.map((deputado) => deputado.nome) ?? [];
   const { replace } = useRouter();
   const pathname = usePathname();
 
@@ -26,11 +19,14 @@ export default function Autocomplete() {
     (event: React.SyntheticEvent<Element, Event>, term: string | null) => {
       const params = new URLSearchParams(searchParams);
       params.set("pagina", "1");
+      context?.setPage(1);
 
       if (term) {
         params.set("nome", encodeURIComponent(term));
+        context?.setFilter(encodeURIComponent(term));
       } else {
         params.delete("nome");
+        context?.setFilter("");
       }
 
       replace(`${pathname}?${params.toString()}`);

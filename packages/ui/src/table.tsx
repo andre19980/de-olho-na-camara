@@ -9,12 +9,10 @@ import {
   Button,
 } from '@mui/material';
 
-import classes from "./table.module.css";
-
 interface DataTableProps {
   data: {
     title: string;
-    id: number;
+    id: string;
     subtitle: string;
   }[];
   page: number;

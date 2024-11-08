@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
- 
+
 export const typeDefs = gql`
   type Query {
     "GET deputatados"
@@ -7,7 +7,7 @@ export const typeDefs = gql`
     "GET deputatado"
     deputado(id: String!): Deputado!
   }
-   
+
   "Deputado represents a congressperson in the federal congress"
   type Deputado {
     "Identifier number of a congressperson"
